@@ -17,12 +17,14 @@ class _HomePageState extends State<HomePage> {
   double heightBody = 0;
   double weightBody = 0;
   double BMI = 0;
+  String bmicount = "";
   @override
   Widget build(BuildContext context) {
     final String args = ModalRoute.of(context)!.settings.arguments as String;
 
     final String username = args;
     return Scaffold(
+      backgroundColor: Colors.cyan,
       appBar: AppBar(
         title: Text("BMI CALCULATE"),
         centerTitle: true,
@@ -34,7 +36,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Card(
               elevation: 2,
-              color: Colors.white,
+              color: Colors.blueAccent,
               child: Container(
                 padding: EdgeInsets.all(20),
                 child: Form(
@@ -55,8 +57,8 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         (username),
                         style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey.shade700,
+                          fontSize: 23,
+                          color: Colors.black,
                         ),
                       ),
                       SizedBox(height: 20),
@@ -64,8 +66,8 @@ class _HomePageState extends State<HomePage> {
                           ? Text(
                               'Score BMI',
                               style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey.shade700,
+                                fontSize: 23,
+                                color: Colors.black,
                               ),
                             )
                           : Text(
@@ -76,6 +78,8 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.amber,
                               ),
                             ),
+                      SizedBox(height: 20),
+                      bmicount == "" ? Container() : Text(bmicount),
                       SizedBox(height: 20),
                       TextFormField(
                         controller: heightBodyControl,
@@ -131,13 +135,22 @@ class _HomePageState extends State<HomePage> {
                             heightBody = heightBody / 100;
                             setState(() {
                               BMI = weightBody / (heightBody * heightBody);
+                              if (BMI < 18.5) {
+                                bmicount = "Under Weight";
+                              } else if (BMI > 18.5 && BMI < 24.9) {
+                                bmicount = "Healthy";
+                              } else if (BMI > 25.0 && BMI < 29.9) {
+                                bmicount = "Over Weight";
+                              } else if (BMI > 30.00) {
+                                bmicount = "Obese";
+                              }
                             });
                           }
                         },
                         icon: Icon(Icons.calculate),
                         label: Text('COUNT'),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.blueAccent,
+                          primary: Colors.amber,
                           textStyle: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

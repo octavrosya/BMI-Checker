@@ -20,6 +20,7 @@ class LoginPage extends StatelessWidget {
     final String username = args['username'];
     final String password = args['password'];
     return Scaffold(
+      backgroundColor: Colors.cyan,
       appBar: AppBar(
         title: const Text("LOGIN"),
         leading: const Icon(Icons.filter_vintage),
